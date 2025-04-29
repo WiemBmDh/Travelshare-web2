@@ -26,37 +26,37 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 50)]
     //#[Assert\NotBlank(message: "First name is required")]
-    //#[Assert\Length(min: 2, max: 50)]
+        //#[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
 
     #[ORM\Column(length: 50)]
     //#[Assert\NotBlank(message: "Last name is required")]
-    //#[Assert\Length(min: 2, max: 50)]
+        //#[Assert\Length(min: 2, max: 50)]
     private ?string $lastName = null;
 
     #[ORM\Column(name: "email", length: 50, unique: true)]
     //#[Assert\NotBlank(message: "Email is required")]
-    //#[Assert\Email(message: "Please enter a valid email address")]
-    //#[Assert\Length(max: 50, maxMessage: "Email cannot exceed {{ limit }} characters")]
+        //#[Assert\Email(message: "Please enter a valid email address")]
+        //#[Assert\Length(max: 50, maxMessage: "Email cannot exceed {{ limit }} characters")]
     private ?string $email = null;
 
     #[ORM\Column(name: "password", length: 255)]
     //#[Assert\NotBlank(message: "Password is required")]
-    //#[Assert\Length(min: 8, max: 255, minMessage: "Password must be at least {{ limit }} characters", maxMessage: "Password cannot exceed {{ limit }} characters")]
-    //#[Assert\Regex(
+        //#[Assert\Length(min: 8, max: 255, minMessage: "Password must be at least {{ limit }} characters", maxMessage: "Password cannot exceed {{ limit }} characters")]
+        //#[Assert\Regex(
         //pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/",
         //message: "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"
-    //)]
+        //)]
     private ?string $password = null;
 
     #[ORM\Column(length: 15)]
     //#[Assert\NotBlank(message: "Phone number is required")]
-    //#[Assert\Length(min: 8, max: 15)]
+        //#[Assert\Length(min: 8, max: 15)]
     private ?string $phoneNum = null;
 
     #[ORM\Column(length: 150)]
     //#[Assert\NotBlank(message: "Address is required")]
-    //#[Assert\Length(min: 5, max: 150)]
+        //#[Assert\Length(min: 5, max: 150)]
     private ?string $address = null;
 
     #[ORM\Column(options: ["default" => 0])]
@@ -115,7 +115,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     public function eraseCredentials(): void
@@ -231,8 +231,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         // Si c'est un upload Symfony File
         if ($photo instanceof \Symfony\Component\HttpFoundation\File\UploadedFile) {
             $this->photo = file_get_contents($photo->getPathname());
-        }
-        // Si c'est une chaîne ou une ressource
+        } // Si c'est une chaîne ou une ressource
         else {
             $this->photo = $photo;
         }
@@ -240,7 +239,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-   // Nouvelle méthode pour l'affichage en base64
+    // Nouvelle méthode pour l'affichage en base64
     public function getPhotoBase64(): ?string
     {
         if (!$this->photo) {
@@ -277,6 +276,4 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->compte = 0; // Débloquer l'utilisateur
     }
-
-
 }

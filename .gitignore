@@ -1,27 +1,68 @@
-###> symfony/framework-bundle ###
+###> IDE ###
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+###< IDE ###
+
+###> OS ###
+.DS_Store
+Thumbs.db
+###< OS ###
+
+###> Symfony local ###
 /.env.local
 /.env.local.php
 /.env.*.local
-/.env
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+/.env.test
+/.env.test.local
+###< Symfony local ###
+
+###> Logs ###
+/log/*
+!/log/.gitkeep
+###< Logs ###
+
+###> Cache/var ###
+/var/*
+!/var/cache
+!/var/log
+!/var/sessions
+!/var/storage
+/var/cache/*
+!var/cache/.gitkeep
+/var/log/*
+!var/log/.gitkeep
+/var/sessions/*
+!var/sessions/.gitkeep
+###< Cache/var ###
+
+###> Vendor ###
 /vendor/
-###< symfony/framework-bundle ###
+###< Vendor ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
+###> Composer ###
+/composer.lock
+###< Composer ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
-###< symfony/phpunit-bridge ###
-
-###> symfony/webpack-encore-bundle ###
-/node_modules/
+###> Frontend ###
+/public/bundles/
 /public/build/
+/node_modules/
+/assets/node_modules/
 npm-debug.log
 yarn-error.log
-###< symfony/webpack-encore-bundle ###
+/webpack.config.js
+/webpack.config.js.local
+###< Frontend ###
+
+###> Tests ###
+.phpunit.result.cache
+/phpunit.xml
+###< Tests ###
+
+###> Uploads ###
+/public/uploads/
+###< Uploads ###
