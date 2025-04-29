@@ -60,16 +60,16 @@
                 <div class="dropdown">
                     <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
                     <div class="dropdown-menu rounded">
-                        <a href="{{ path('app_profile') }}" class="dropdown-item">
+                        <a href="" class="dropdown-item">
                             <i class="fas fa-user-alt me-2"></i> My Profile
                         </a>
-                        <a href="{{ path('app_reclamation') }}" class="dropdown-item">
+                        <a href="" class="dropdown-item">
                             <i class="fas fa-comment-alt me-2"></i> Reclamation
                         </a>
-                        <a href="{{ path('app_list_rec_user') }}" class="dropdown-item">
-                            <i class="fas fa-history"></i> Historic
+                        <a href="" class="dropdown-item">
+                            <i class="fas fa-history"></i> Historique
                         </a>
-                        <a href="{{ path('app_logout') }}" class="dropdown-item">
+                        <a href="" class="dropdown-item">
                             <i class="fas fa-power-off me-2"></i> Log Out
                         </a>
                     </div>
@@ -84,7 +84,7 @@
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
         <a href="" class="navbar-brand p-0">
-            <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>Travela</h1>
+            <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>TravelaShare</h1>
             <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -92,25 +92,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{{ path('app_home') }}" class="nav-item nav-link">Home</a>
-                <a href="{{ path('app_about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ path('app_service') }}" class="nav-item nav-link">Services</a>
-                <a href="{{ path('app_package') }}" class="nav-item nav-link">Packages</a>
-                <a href="{{ path('app_blog') }}" class="nav-item nav-link">Blog</a>
+                <a href="" class="nav-item nav-link">Home</a>
+                <a href="" class="nav-item nav-link">About</a>
+                <a href="" class="nav-item nav-link">Services</a>
+                <a href="" class="nav-item nav-link">Packages</a>
+                <a href="" class="nav-item nav-link">Blog</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
-                        <a href="{{ path('app_destination') }}" class="dropdown-item">Destination</a>
-                        <a href="{{ path('app_tour') }}" class="dropdown-item">Explore Tour</a>
-                        <a href="{{ path('app_booking') }}" class="dropdown-item">Travel Booking</a>
-                        <a href="{{ path('app_gallery') }}" class="dropdown-item">Our Gallery</a>
-                        <a href="{{ path('app_guide') }}" class="dropdown-item active">Travel Guides</a>
-                        <a href="{{ path('app_testimonial') }}" class="dropdown-item">Testimonial</a>
-                        <a href="{{ path('app_error') }}" class="dropdown-item">404 Page</a>
+                        <a href="{{ path('app_excursions_client') }}" class="dropdown-item">Excursions</a>
+                        <a href="" class="dropdown-item ">Explore Tour</a>
+                        <a href="" class="dropdown-item">Travel Booking</a>
+                        <a href="" class="dropdown-item">Our Gallery</a>
+                        <a href="" class="dropdown-item">Travel Guides</a>
+                        <a href="" class="dropdown-item">Testimonial</a>
+                        <a href="" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
-                <a href="{{ path('app_contact') }}" class="nav-item nav-link">Contact</a>
+                <a href="" class="nav-item nav-link">Contact</a>
             </div>
             <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a>
         </div>
@@ -118,115 +118,109 @@
 </div>
 <!-- Navbar & Hero End -->
 
+<!-- Explore Tour Start -->
+
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h1 class="text-white display-3 mb-4">Our Travel Guides</h1>
-            <ol class="breadcrumb justify-content-center mb-0">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active text-white">Guides</li>
-            </ol>
+        <h1 class="text-white display-3 mb-4">{{ excursion.title }}</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Détails Excursion</li>
+        </ol>
     </div>
 </div>
 <!-- Header End -->
 
-<!-- Travel Guide Start -->
-<div class="container-fluid guide py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-            <h5 class="section-title px-3">Travel Guide</h5>
-            <h1 class="mb-0">Meet Our Guide</h1>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="guide-item">
-                    <div class="guide-img">
-                        <div class="guide-img-efects">
-                            <img src="img/guide-1.jpg" class="img-fluid w-100 rounded-top" alt="Image">
+<!-- Excursion Detail Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="mb-5">
+                    {% if excursion.image %}
+                    <img class="img-fluid w-100 rounded" src="{{ excursion.image }}" alt="{{ excursion.title }}">
+                    {% else %}
+                    <img class="img-fluid w-100 rounded" src="{{ asset('images/default-excursion.jpg') }}" alt="Excursion par défaut">
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <h2 class="mb-3">{{ excursion.title }}</h2>
+                        <p>{{ excursion.description }}</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <div class="ps-3">
+                                        <p class="mb-0">Date</p>
+                                        <h6 class="text-primary mb-0">{{ excursion.dateExcursion|date('d/m/Y') }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                                    <div class="ps-3">
+                                        <p class="mb-0">Price</p>
+                                        <h6 class="text-primary mb-0">{{ excursion.prix }} DT</h6>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
+                        
+                        <h4 class="mb-3">Guide</h4>
+                        {% if excursion.guide %}
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary rounded-circle flex-shrink-0" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-1">{{ excursion.guide.name }} {{ excursion.guide.lastName }}</h6>
+                                <small>Professional Guide</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="guide-title text-center rounded-bottom p-4">
-                        <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="guide-item">
-                    <div class="guide-img">
-                        <div class="guide-img-efects">
-                            <img src="img/guide-2.jpg" class="img-fluid w-100 rounded-top" alt="Image">
-                        </div>
-                        <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="guide-title text-center rounded-bottom p-4">
-                        <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="guide-item">
-                    <div class="guide-img">
-                        <div class="guide-img-efects">
-                            <img src="img/guide-3.jpg" class="img-fluid w-100 rounded-top" alt="Image">
-                        </div>
-                        <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="guide-title text-center rounded-bottom p-4">
-                        <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
-                        </div>
+                        {% else %}
+                        <p>No guide assigned</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="guide-item">
-                    <div class="guide-img">
-                        <div class="guide-img-efects">
-                            <img src="img/guide-4.jpg" class="img-fluid w-100 rounded-top" alt="Image">
-                        </div>
-                        <div class="guide-icon rounded-pill p-2">
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-square btn-primary rounded-circle mx-1" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="bg-primary rounded p-4 mb-4">
+                    <h4 class="text-white mb-4">Réserver</h4>
+                    <p class="text-white">Would you like to participate in this excursion?</p>
+                    <a href="{{ path('app_book_excursions', {'id': excursion.excursionId}) }}" class="btn btn-light w-100 py-2">Book now</a>
+                </div>
+                <div class="bg-light rounded p-4 mb-4">
+                    <h4 class="mb-4">Statut</h4>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Availability :</span>
+                        <span class="{{ date(excursion.dateExcursion) < date() ? 'text-danger' : 'text-success' }}">
+                            {{ date(excursion.dateExcursion) < date() ? 'Finished' : 'Available' }}
+                        </span>
                     </div>
-                    <div class="guide-title text-center rounded-bottom p-4">
-                        <div class="guide-title-inner">
-                            <h4 class="mt-3">Full Name</h4>
-                            <p class="mb-0">Designation</p>
-                        </div>
-                    </div>
+                   <div class="d-flex justify-content-between">
+    <span>Durée:</span>
+    <span>
+        {% if excursion.dateFin and excursion.dateExcursion %}
+            {{ date(excursion.dateFin).diff(date(excursion.dateExcursion)).days }} day(s)
+        {% else %}
+            Duration not specified
+        {% endif %}
+    </span>
+</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Travel Guide End -->
+<!-- Excursion Detail End -->
+
+<!-- Explore Tour End -->
+
 
 <!-- Subscribe Start -->
 <div class="container-fluid subscribe py-5">
@@ -349,13 +343,14 @@
         </div>
     </div>
 </div>
-</div>
 <!-- Copyright End -->
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 {% endblock %}
+
+
 
 {% block js%}
     <!-- JavaScript Libraries -->
@@ -372,9 +367,3 @@
 {% endblock %}
 </body>
 </html>
-
-
-
-
-
-
