@@ -1,39 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html.twig' %}
 
-<head>
-    <meta charset="utf-8">
-    <title>{% block title %}TravelaShare - Tourism Website Template{% endblock %}</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Lien vers la favicon -->
-    <link rel="icon" href="{{ asset('images2/favicon.svg') }}" type="image/x-icon">
-
-    {% block css%}
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet">
-
-        <!-- Icon Font Stylesheet -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-        <!-- Libraries Stylesheet -->
-        <link href="lib/owlcarousel/assets/owl.carousel.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-
-
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    {% endblock%}
-</head>
+{% block title %}Mes Excursions Favorites{% endblock %}
 
 {% block body %}
-<body>
-
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -56,7 +25,6 @@
         </div>
         <div class="col-lg-4 text-center text-lg-end">
             <div class="d-inline-flex align-items-center" style="height: 45px;">
-
                 <div class="dropdown">
                     <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
                     <div class="dropdown-menu rounded">
@@ -85,7 +53,6 @@
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
         <a href="" class="navbar-brand p-0">
             <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>TravelaShare</h1>
-            <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
@@ -97,17 +64,16 @@
                 <a href="" class="nav-item nav-link">Services</a>
                 <a href="" class="nav-item nav-link">Packages</a>
                 <a href="" class="nav-item nav-link">Blog</a>
-
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
                         <a href="{{ path('app_excursions_client') }}" class="dropdown-item">Excursions</a>
-                        <a href="" class="dropdown-item ">Explore Tour</a>
+                        <a href="" class="dropdown-item">Explore Tour</a>
                         <a href="" class="dropdown-item">Travel Booking</a>
                         <a href="" class="dropdown-item">Our Gallery</a>
-                        <a href="" class="dropdown-item">Travel Guides</a>
+                         <a href="" class="dropdown-item">Travel Guides</a>
                         <a href="" class="dropdown-item">Testimonial</a>
-                        <a href="{{ path('app_favoris') }}"  class="dropdown-item">Favoris List</a>
+                         <a href="{{ path('app_favoris') }}"  class="dropdown-item">Favoris List</a>
                     </div>
                 </div>
                 <a href="" class="nav-item nav-link">Contact</a>
@@ -118,109 +84,77 @@
 </div>
 <!-- Navbar & Hero End -->
 
-<!-- Explore Tour Start -->
-
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h1 class="text-white display-3 mb-4">{{ excursion.title }}</h1>
+        <h1 class="text-white display-3 mb-4">Mes Favoris</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Détails Excursion</li>
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li class="breadcrumb-item active text-white">Favoris</li>
         </ol>
     </div>
 </div>
 <!-- Header End -->
 
-<!-- Excursion Detail Start -->
+<!-- Excursions Favorites Start -->
 <div class="container-fluid py-5">
     <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="d-inline-block text-primary text-uppercase border-bottom border-5">Mes Excursions Favorites</h2>
+        </div>
+        
         <div class="row g-5">
-            <!-- Main Content -->
-            <div class="col-lg-8">
-                <div class="mb-5">
-                    {% if excursion.image %}
-                    <img class="img-fluid w-100 rounded" src="{{ excursion.image }}" alt="{{ excursion.title }}">
-                    {% else %}
-                    <img class="img-fluid w-100 rounded" src="{{ asset('images/default-excursion.jpg') }}" alt="Excursion par défaut">
-                    {% endif %}
-                    
-                    <div class="mt-4">
-                        <h2 class="mb-3">{{ excursion.title }}</h2>
-                        <p>{{ excursion.description }}</p>
-                        
-                        <div class="row g-4 mb-4">
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <div class="ps-3">
-                                        <p class="mb-0">Date</p>
-                                        <h6 class="text-primary mb-0">{{ excursion.dateExcursion|date('d/m/Y') }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
-                                    <div class="ps-3">
-                                        <p class="mb-0">Price</p>
-                                        <h6 class="text-primary mb-0">{{ excursion.prix }} DT</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h4 class="mb-3">Guide</h4>
-                        {% if excursion.guide %}
-                        <div class="d-flex align-items-center">
-                            <div class="bg-primary rounded-circle flex-shrink-0" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-user text-white"></i>
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-1">{{ excursion.guide.name }} {{ excursion.guide.lastName }}</h6>
-                                <small>Professional Guide</small>
-                            </div>
-                        </div>
+            {% for excursion in excursions %}
+            <div class="col-lg-4 col-md-6">
+                <div class="package-item bg-white rounded overflow-hidden">
+                    <div class="position-relative">
+                        {% if excursion.image %}
+                        <img class="img-fluid w-100" src="{{ excursion.image }}" alt="{{ excursion.title }}">
                         {% else %}
-                        <p>No guide assigned</p>
+                        <img class="img-fluid w-100" src="{{ asset('images/default-excursion.jpg') }}" alt="Excursion par défaut">
                         {% endif %}
+                        
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="far fa-calendar-alt text-primary me-2"></i>{{ excursion.dateExcursion|date('d/m/Y') }}</small>
+                                <small class="m-0"><i class="fas fa-wallet text-primary me-2"></i>{{ excursion.prix }} DT</small>
+                            </div>
+                            <h5 class="mb-3">{{ excursion.title }}</h5>
+                            <p>{{ excursion.description|slice(0, 100) }}...</p>
+                            <div class="d-flex justify-content-between border-top mt-4 pt-4">
+                                <div class="d-flex align-items-center">
+                                    {% if excursion.guide %}
+                                    <small><i class="fas fa-user text-primary me-2"></i>{{ excursion.guide.name }} {{ excursion.guide.lastName }}</small>
+                                    {% else %}
+                                    <small><i class="fas fa-user text-primary me-2"></i>No guide</small>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <button class="excursion-favorite-btn btn btn-sm btn-primary" data-excursion-id="{{ excursion.excursionId }}">
+                                        <i class="fas fa-heart me-1"></i> Retirer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Sidebar -->
-            <div class="col-lg-4">
-                <div class="bg-primary rounded p-4 mb-4">
-                    <h4 class="text-white mb-4">Réserver</h4>
-                    <p class="text-white">Would you like to participate in this excursion?</p>
-                    <a href="{{ path('app_book_excursions', {'id': excursion.excursionId}) }}" class="btn btn-light w-100 py-2">Book now</a>
-                </div>
-                <div class="bg-light rounded p-4 mb-4">
-                    <h4 class="mb-4">Statut</h4>
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Availability :</span>
-                        <span class="{{ date(excursion.dateExcursion) < date() ? 'text-danger' : 'text-success' }}">
-                            {{ date(excursion.dateExcursion) < date() ? 'Finished' : 'Available' }}
-                        </span>
-                    </div>
-                   <div class="d-flex justify-content-between">
-    <span>Durée:</span>
-    <span>
-        {% if excursion.dateFin and excursion.dateExcursion %}
-            {{ date(excursion.dateFin).diff(date(excursion.dateExcursion)).days }} day(s)
-        {% else %}
-            Duration not specified
-        {% endif %}
-    </span>
-</div>
+            {% else %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="fas fa-heart-broken fa-4x text-primary mb-4"></i>
+                    <h3 class="text-primary">Aucune excursion favorite</h3>
+                    <p class="mb-4">Vous n'avez pas encore ajouté d'excursion à vos favoris</p>
+                    <a href="{{ path('app_excursions_client') }}" class="btn btn-primary py-2 px-4">
+                        <i class="fas fa-umbrella-beach me-2"></i>Explorer les excursions
+                    </a>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </div>
-<!-- Excursion Detail End -->
-
-<!-- Explore Tour End -->
-
+<!-- Excursions Favorites End -->
 
 <!-- Subscribe Start -->
 <div class="container-fluid subscribe py-5">
@@ -335,9 +269,6 @@
                 <i class="fas fa-copyright me-2"></i><a class="text-white" href="#">Your Site Name</a>, All right reserved.
             </div>
             <div class="col-md-6 text-center text-md-start">
-                <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
                 Designed By <a class="text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a>
             </div>
         </div>
@@ -347,23 +278,57 @@
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i class="fa fa-arrow-up"></i></a>
-
 {% endblock %}
 
-
-
-{% block js%}
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js') }}"></script>
+{% block js %}
+{{ parent() }}
+<script>
+$(document).ready(function() {
+    // Gestion du clic sur le bouton favori dans la page des favoris
+    $('.excursion-favorite-btn').click(function(e) {
+        e.preventDefault();
+        const button = $(this);
+        const excursionId = button.data('excursion-id');
+        const card = button.closest('.col-lg-4.col-md-6');
+        
+        $.ajax({
+            url: '/favoris/toggle/' + excursionId,
+            method: 'POST',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    if (!response.isFavorite) {
+                        // Supprime la carte de la vue si l'utilisateur retire des favoris
+                        card.fadeOut(300, function() {
+                            $(this).remove();
+                            // Si plus d'excursions, affiche le message vide
+                            if ($('.package-item').length === 0) {
+                                const emptyHtml = `
+                                    <div class="col-12">
+                                        <div class="text-center py-5">
+                                            <i class="fas fa-heart-broken fa-4x text-primary mb-4"></i>
+                                            <h3 class="text-primary">Aucune excursion favorite</h3>
+                                            <p class="mb-4">Vous n'avez pas encore ajouté d'excursion à vos favoris</p>
+                                            <a href="{{ path('app_excursions_client') }}" class="btn btn-primary py-2 px-4">
+                                                <i class="fas fa-umbrella-beach me-2"></i>Explorer les excursions
+                                            </a>
+                                        </div>
+                                    </div>`;
+                                $('.row.g-5').append(emptyHtml);
+                            }
+                        });
+                    }
+                }
+            },
+            error: function(xhr) {
+                if (xhr.status === 401) {
+                    window.location.href = '/login';
+                } else {
+                    alert('Une erreur est survenue');
+                }
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
-</body>
-</html>

@@ -46,6 +46,7 @@ security:
     access_control:
         # Only users with ROLE_USER or higher can access the home page
         - { path: ^/home, roles: ROLE_USER }
+        - { path: ^/favoris, roles: ROLE_USER }
         # Example for admin path access control
         # - { path: ^/admin, roles: ROLE_ADMIN }
 

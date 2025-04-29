@@ -216,7 +216,7 @@
                             <p>Guides</p>
                         </a>
                     </li>
-                     <li class="nav-item">
+                     <li class="nav-item active">
                         <a href="{{ path('app_excursions_read') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Excursions</p>
@@ -249,30 +249,7 @@
                             />
                         </div>
                     </nav>
-                 <div class="notification-container">
-                    {% for type, messages in app.flashes %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ type }} alert-dismissible fade show shadow">
-                                <div class="d-flex align-items-center">
-                                    {% if type == 'warning' %}
-                                        <i class="fas fa-exclamation-triangle me-3 fs-4"></i>
-                                    {% elseif type == 'success' %}
-                                        <i class="fas fa-check-circle me-3 fs-4"></i>
-                                    {% elseif type == 'error' %}
-                                        <i class="fas fa-times-circle me-3 fs-4"></i>
-                                    {% else %}
-                                        <i class="fas fa-info-circle me-3 fs-4"></i>
-                                    {% endif %}
-                                    <div>
-                                        <strong class="d-block">{{ type|capitalize }}</strong>
-                                        {{ message }}
-                                    </div>
-                                </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
+                
                     <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                         <li
                                 class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"

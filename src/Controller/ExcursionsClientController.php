@@ -41,4 +41,5 @@ public function index(Request $request, ExcursionsRepository $excursionsReposito
             'excursion' => $excursion,
         ]);
     }
+    
 }
