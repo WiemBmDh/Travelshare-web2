@@ -278,4 +278,5 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->compte = 0; // Débloquer l'utilisateur
     }
 
+
 }
