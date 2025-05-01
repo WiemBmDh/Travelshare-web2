@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Users;
 use App\Entity\Notification;
 use App\Repository\UsersRepository;
+use App\Repository\ReclamationsRepository;
+use App\Repository\ReponsesRepository;
+use App\Repository\ExcursionsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -121,4 +124,92 @@ class AccueilAdminController extends AbstractController
             ]
         );
     }
+
+    #[Route('/admin/user/count', name: 'admin_user_count', methods: ['GET'])]
+    public function getUserCount(UsersRepository $userRepository): JsonResponse
+    {
+        try {
+            // Récupérer le nombre d'utilisateurs en comptant les entrées dans la table 'Users'
+            $userCount = $userRepository->createQueryBuilder('u')
+                ->select('COUNT(u.userId)') // Assurez-vous d'utiliser 'userId' qui est le bon identifiant dans votre entité
+                ->getQuery()
+                ->getSingleScalarResult(); // Cette méthode renvoie le nombre d'utilisateurs
+
+            return $this->json([
+                'success' => true,
+                'userCount' => $userCount,
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    #[Route('/admin/reclamation/count', name: 'admin_reclamation_count', methods: ['GET'])]
+    public function getReclamationCount(ReclamationsRepository $reclamationsRepository): JsonResponse
+    {
+        try {
+            // Compter les réclamations via DQL (en respectant le nom correct du champ)
+            $reclamationCount = $reclamationsRepository->createQueryBuilder('r')
+                ->select('COUNT(r.reclamationId)')
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            return new JsonResponse([
+                'success' => true,
+                'reclamationCount' => $reclamationCount,
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Erreur : ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    #[Route('/admin/reponses/count', name: 'admin_reponses_count', methods: ['GET'])]
+    public function getReponsesCount(ReponsesRepository $reponsesRepository): JsonResponse
+    {
+        try {
+            $reponseCount = $reponsesRepository->createQueryBuilder('r')
+                ->select('COUNT(r.reponseId)')
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            return new JsonResponse([
+                'success' => true,
+                'reponseCount' => $reponseCount,
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Erreur : ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    #[Route('/admin/excursions/count', name: 'admin_excursion_count', methods: ['GET'])]
+    public function getExcursionCount(ExcursionsRepository $excursionsRepository): JsonResponse
+    {
+        try {
+            // Récupérer le nombre d'excursions
+            $excursionCount = $excursionsRepository->createQueryBuilder('e')
+                ->select('COUNT(e.excursionId)') // Utilisez 'excursionId' pour correspondre à la colonne
+                ->getQuery()
+                ->getSingleScalarResult(); // Renvoie le nombre d'excursions
+
+            return $this->json([
+                'success' => true,
+                'excursionCount' => $excursionCount,
+            ]);
+        } catch (\Exception $e) {
+            return $this->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
 }

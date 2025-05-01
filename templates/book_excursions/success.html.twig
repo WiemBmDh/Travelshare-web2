@@ -145,7 +145,7 @@
                         <a href="" class="dropdown-item">
                             <i class="fas fa-history"></i> History
                         </a>
-                        <a href="" class="dropdown-item">
+                        <a href="{{ path('app_logout') }}" class="dropdown-item">
                             <i class="fas fa-power-off me-2"></i> Logout
                         </a>
                     </div>
@@ -167,7 +167,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="" class="nav-item nav-link">Home</a>
+                <a href="{{ path('app_home') }}" class="nav-item nav-link">Home</a>
                 <a href="" class="nav-item nav-link">About</a>
                 <a href="" class="nav-item nav-link">Services</a>
                 <a href="" class="nav-item nav-link">Packages</a>

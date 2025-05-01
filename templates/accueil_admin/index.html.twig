@@ -98,7 +98,6 @@
                 padding-bottom: 10px;
             }
 
-
         </style>
     {% endblock %}
 
@@ -168,6 +167,14 @@
                         <a href="{{ path('app_excursions_read') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Excursions</p>
+                        </a>
+                    </li>
+
+                    <!-- Lien vers chart -->
+                    <li class="nav-item ">
+                        <a href="{{ path('app_chart_admin') }}">
+                            <i class="fas fa-pen-square"></i>
+                            <p>Charts</p>
                         </a>
                     </li>
                 </ul>
@@ -366,15 +373,14 @@
                                             <div class="u-text">
                                                 <h4>{{ app.user.name }}</h4> <!-- Affichage du nom de l'utilisateur -->
                                                 <p class="text-muted">{{ app.user.email }}</p> <!-- Affichage de l'email -->
-                                                <a href="{{ path('app_accueil_admin') }}" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ path('app_accueil_admin') }}">My Profile</a>
+                                        <a class="dropdown-item" href="{{ path('app_profile_admin') }}">My Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Account Settings</a>
+                                        <a class="dropdown-item" href="{{ path('app_update_account_admin') }}">Account Settings</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
                                     </li>
@@ -411,8 +417,8 @@
                                     </div>
                                     <div class="col col-stats ms-3 ms-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Visitors</p>
-                                            <h4 class="card-title">1,294</h4>
+                                            <p class="card-category">Users</p>
+                                            <h4 class="card-title" id="user-count">Loading...</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -432,35 +438,15 @@
                                     </div>
                                     <div class="col col-stats ms-3 ms-sm-0">
                                         <div class="numbers">
-                                            <p class="card-category">Subscribers</p>
-                                            <h4 class="card-title">1303</h4>
+                                            <p class="card-category">Reclamations</p>
+                                            <h4 class="card-title" id="reclamation-count">Loading...</h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="card card-stats card-round">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-icon">
-                                        <div
-                                                class="icon-big text-center icon-success bubble-shadow-small"
-                                        >
-                                            <i class="fas fa-luggage-cart"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col col-stats ms-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Sales</p>
-                                            <h4 class="card-title">$ 1,345</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-sm-6 col-md-3">
                         <div class="card card-stats card-round">
                             <div class="card-body">
@@ -473,15 +459,38 @@
                                         </div>
                                     </div>
                                     <div class="col col-stats ms-3 ms-sm-0">
-                                        <div class="numbers">
-                                            <p class="card-category">Order</p>
-                                            <h4 class="card-title">576</h4>
+                                        <div class="numbers" id="reponses-nombre">
+                                            <p class="card-category">Reponses</p>
+                                            <h4 class="card-title" id="reponse-count">Loading...</h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <div class="card card-stats card-round">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-icon">
+                                        <div
+                                                class="icon-big text-center icon-success bubble-shadow-small"
+                                        >
+                                            <i class="fas fa-luggage-cart"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col col-stats ms-3 ms-sm-0">
+                                        <div class="numbers" id="excursions-nombre">
+                                            <p class="card-category">Excursions</p>
+                                            <h4 class="card-title" id="excursion-count">Loading...</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -494,18 +503,19 @@
                                     </h4>
                                     <div class="card-tools">
                                         <div class="input-group">
-                                            <input
-                                                    type="text"
-                                                    class="form-control border-primary"
-                                                    placeholder="Search users by email..."
-                                                    id="userSearch"
-                                                    onkeyup="filterUsersByEmail()"
-                                            >
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
+                                            <!-- Recherche par email -->
+                                            <input type="text" class="form-control border-primary" placeholder="Search users by email..." id="userSearch" onkeyup="filterUsers()" style="width: 200px;">
+
+                                            <!-- Recherche par statut -->
+                                            <select id="userStatus" class="form-control border-primary" style="width: 150px" onchange="filterUsers()">
+                                                <option value="">All Status</option>
+                                                <option value="blocked">Blocked</option>
+                                                <option value="unblocked">UnBlocked</option>
+                                            </select>
+
+                                            <button class="btn btn-primary" type="button" onclick="resetFilters()" title="Reset filters">
+                                                &#x274C; <!-- Emoji croix rouge -->
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -552,7 +562,7 @@
                                                 <td class="text-center">
                                         <span class="badge rounded-pill bg-{{ user.isBlocked() ? 'danger' : 'success' }}">
                                             <i class="fas fa-{{ user.isBlocked() ? 'lock' : 'check-circle' }} me-1"></i>
-                                            {{ user.isBlocked() ? 'Bloqué' : 'Actif' }}
+                                            {{ user.isBlocked() ? 'Blocked' : 'UnBlocked' }}
                                         </span>
                                                 </td>
                                                 <td class="text-center">
@@ -564,9 +574,9 @@
                                                             <input type="hidden" name="_token" value="{{ csrf_token('toggle-block' ~ user.userId) }}">
                                                             <button type="submit"
                                                                     class="btn btn-sm btn-{{ user.isBlocked() ? 'success' : 'danger' }} mx-1"
-                                                                    title="{{ user.isBlocked() ? 'Débloquer' : 'Bloquer' }}">
+                                                                    title="{{ user.isBlocked() ? 'UnBlocked' : 'Blocked' }}">
                                                                 <i class="fas fa-{{ user.isBlocked() ? 'unlock' : 'ban' }}"></i>
-                                                                {{ user.isBlocked() ? 'Débloquer' : 'Bloquer' }}
+                                                                {{ user.isBlocked() ? 'UnBlocked' : 'Blocked' }}
                                                             </button>
                                                         </form>
 
@@ -953,27 +963,124 @@
         });
 
         //recherche
-            function filterUsersByEmail() {
-            // 1. Récupérer la valeur de recherche
+        function filterUsers() {
+            // Récupérer la valeur de recherche par email
             const searchTerm = document.getElementById("userSearch").value.toLowerCase();
 
-            // 2. Cibler le tableau et ses lignes
+            // Récupérer la valeur de recherche par statut
+            const statusFilter = document.getElementById("userStatus").value;
+
+            // Cibler le tableau et ses lignes
             const table = document.getElementById("usersTable");
-            const rows = table.querySelectorAll("tbody tr"); // Ignorer l'en-tête
+            const rows = table.querySelectorAll("tbody tr");
 
-            // 3. Parcourir chaque ligne et comparer l'email
+            // Parcourir chaque ligne du tableau
             rows.forEach(row => {
-            const emailCell = row.cells[3]; // Colonne email (4ème cellule)
-            const email = emailCell.textContent.toLowerCase();
+                const emailCell = row.cells[3]; // La cellule contenant l'email (4ème colonne)
+                const email = emailCell.textContent.toLowerCase();
 
-            // Afficher/masquer la ligne selon la correspondance
-            if (email.includes(searchTerm)) {
-            row.style.display = ""; // Afficher
-        } else {
-            row.style.display = "none"; // Masquer
+                const statusCell = row.cells[6]; // La cellule contenant le statut (7ème colonne)
+                const statusBadge = statusCell.querySelector('.badge'); // On cible le badge
+                const statusText = statusBadge.textContent.trim().toLowerCase(); // Texte du statut en minuscules
+
+                // Vérifier si l'email correspond
+                const matchesEmail = email.includes(searchTerm);
+
+                // Vérifier si le statut correspond
+                let matchesStatus = true;
+                if (statusFilter === "blocked") {
+                    matchesStatus = statusText === "blocked";
+                } else if (statusFilter === "unblocked") {
+                    matchesStatus = statusText === "unblocked";
+                }
+
+                // Afficher ou masquer la ligne selon les critères
+                row.style.display = (matchesEmail && matchesStatus) ? "" : "none";
+            });
         }
+
+        //resetfiltre
+        function resetFilters() {
+            // Réinitialiser les champs de filtre
+            document.getElementById("userSearch").value = "";
+            document.getElementById("userStatus").value = "";
+
+            // Réafficher toutes les lignes
+            const rows = document.querySelectorAll("#usersTable tbody tr");
+            rows.forEach(row => {
+                row.style.display = "";
+            });
+
+            // Optionnel : Remettre le focus sur le champ de recherche
+            document.getElementById("userSearch").focus();
+        }
+
+        //nbre user
+
+        fetch("{{ path('admin_user_count') }}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('user-count').innerText = data.userCount;
+                } else {
+                    alert(data.message); // Si une erreur survient
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user count:', error);
+            });
+
+        //nbre reclamation
+
+        fetch("{{ path('admin_reclamation_count') }}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('reclamation-count').innerText = data.reclamationCount;
+                } else {
+                    alert(data.message); // Si une erreur survient
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching reclamation count:', error);
+            });
+
+        //nbre reponse
+
+        fetch('/admin/reponses/count')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('reponse-count').textContent = data.reponseCount;
+                } else {
+                    document.getElementById('reponse-count').textContent = 'Erreur';
+                }
+            })
+            .catch(error => {
+                document.getElementById('reponse-count').textContent = 'Erreur';
+                console.error(error);
+            });
+
+        //nbre excursion
+
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('/admin/excursions/count')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Pour voir ce qui est renvoyé
+                    if (data.success) {
+                        document.getElementById('excursion-count').textContent = data.excursionCount;
+                    } else {
+                        document.getElementById('excursion-count').textContent = 'Erreur';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('excursion-count').textContent = 'Erreur';
+                    console.error(error);
+                });
         });
-        }
+
+
 
 
     </script>

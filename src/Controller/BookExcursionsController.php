@@ -29,7 +29,7 @@ class BookExcursionsController extends AbstractController
     public function show(int $id, EntityManagerInterface $em): Response
     {
         $excursion = $em->getRepository(Excursions::class)->find($id);
-        
+
         if (!$excursion) {
             throw $this->createNotFoundException('Excursion not found');
         }
@@ -52,7 +52,7 @@ class BookExcursionsController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        
+
         // Validation du JSON
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $this->json([
@@ -90,8 +90,8 @@ class BookExcursionsController extends AbstractController
                 'payment_method' => $data['paymentMethodId'],
                 'confirm' => true,
                 'return_url' => $this->generateUrl(
-                    'app_payment_success', 
-                    ['id' => $id], 
+                    'app_payment_success',
+                    ['id' => $id],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),
                 'receipt_email' => $data['customerEmail'],
@@ -132,11 +132,11 @@ class BookExcursionsController extends AbstractController
     public function paymentSuccess(int $id, EntityManagerInterface $em): Response
     {
         $excursion = $em->getRepository(Excursions::class)->find($id);
-        
+
         if (!$excursion) {
             throw $this->createNotFoundException('Excursion not found');
         }
-        
+
         return $this->render('book_excursions/success.html.twig', [
             'excursion' => $excursion,
         ]);

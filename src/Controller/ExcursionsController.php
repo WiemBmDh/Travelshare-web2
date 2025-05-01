@@ -26,21 +26,21 @@ class ExcursionsController extends AbstractController
     {
         // Récupère les excursions passées
         $pastExcursions = $notificationService->checkPastExcursions();
-        
+
         // Crée les notifications formatées
         $notifications = [];
         foreach ($pastExcursions as $excursion) {
             $notifications[] = [
                 'type' => 'warning',
                 'icon' => 'exclamation-triangle',
-                'message' => sprintf('Excursion "%s" est terminée depuis le %s', 
+                'message' => sprintf('Excursion "%s" est terminée depuis le %s',
                     $excursion->getTitle(),
                     $excursion->getDateExcursion()->format('d/m/Y')
                 ),
                 'createdAt' => $excursion->getDateExcursion()
             ];
         }
-    
+
         return $this->render('excursions/readExcursion.html.twig', [
             'excursions' => $excursionsRepository->findAllWithGuides(),
             'notifications' => $notifications // On passe les notifications au template
@@ -51,21 +51,21 @@ class ExcursionsController extends AbstractController
     {
         $excursion = new Excursions();
         $form = $this->createForm(ExcursionsType::class, $excursion);
-        
+
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $entityManager->persist($excursion);
                 $entityManager->flush();
-                
+
                 $this->addFlash('success', 'Excursion créée avec succès');
                 return $this->redirectToRoute('app_excursions_read');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Erreur lors de la création: '.$e->getMessage());
             }
         }
-        
+
         return $this->render('excursions/addExcursion.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -76,14 +76,14 @@ class ExcursionsController extends AbstractController
     {
         $form = $this->createForm(ExcursionsType::class, $excursion);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            
+
             $this->addFlash('success', 'L\'excursion a été modifiée avec succès.');
             return $this->redirectToRoute('app_excursions_read');
         }
-        
+
         return $this->render('excursions/editExcursion.html.twig', [
             'excursion' => $excursion,
             'form' => $form->createView(),
@@ -96,7 +96,7 @@ class ExcursionsController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$excursion->getExcursionId(), $request->request->get('_token'))) {
             $entityManager->remove($excursion);
             $entityManager->flush();
-            
+
             $this->addFlash('success', 'L\'excursion a été supprimée avec succès.');
         } else {
             $this->addFlash('error', 'Token CSRF invalide, suppression annulée.');

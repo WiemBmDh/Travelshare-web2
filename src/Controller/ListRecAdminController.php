@@ -56,18 +56,25 @@ final class ListRecAdminController extends AbstractController
             return $this->redirectToRoute('app_list_rec_admin');
         }
 
+        // Créer et persister la réponse
         $reponse = new Reponses();
         $reponse->setContenu($message);
-        $reponse->setReclamation($reclamation); // This will now work
+        $reponse->setReclamation($reclamation);
         $reponse->setDateReponse(new \DateTime());
 
         $em->persist($reponse);
+
+        // Mettre à jour l'état de la réclamation
+        $reclamation->setEtat('repondu'); // Changer l'état en "répondu"
+
+        // Persister la réclamation mise à jour
+        $em->persist($reclamation);
         $em->flush();
 
         $this->addFlash('success', 'Réponse envoyée avec succès !');
         return $this->redirectToRoute('app_list_rec_admin');
-
     }
+
 }
 
 

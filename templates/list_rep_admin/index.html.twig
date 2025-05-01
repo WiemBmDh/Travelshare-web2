@@ -1,6 +1,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>{% block title %}Admin Dashboard{% endblock %}</title>
+    <title>{% block title %}List of Responses | Admin Dashboard{% endblock %}</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
 
 <!-- Lien vers la favicon -->
@@ -122,6 +122,14 @@
                         <a href="{{ path('app_excursions_read') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Excursions</p>
+                        </a>
+                    </li>
+
+                    <!-- Lien vers chart -->
+                    <li class="nav-item ">
+                        <a href="{{ path('app_chart_admin') }}">
+                            <i class="fas fa-pen-square"></i>
+                            <p>Charts</p>
                         </a>
                     </li>
                 </ul>
@@ -324,15 +332,14 @@
                                             <div class="u-text">
                                                 <h4>{{ app.user.name }}</h4> <!-- Affichage du nom de l'utilisateur -->
                                                 <p class="text-muted">{{ app.user.email }}</p> <!-- Affichage de l'email -->
-                                                <a href="{{ path('app_accueil_admin') }}" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ path('app_accueil_admin') }}">My Profile</a>
+                                        <a class="dropdown-item" href="{{ path('app_profile_admin') }}">My Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Account Settings</a>
+                                        <a class="dropdown-item" href="{{ path('app_update_account_admin') }}">Account Settings</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
                                     </li>
@@ -352,21 +359,6 @@
                         <i class="fas fa-pen-square text-primary me-2"></i>List of Answers
                     </h2>
 
-                    <div class="d-flex">
-                        <!-- Filtres -->
-                        <div class="btn-group me-3">
-                            <button class="btn btn-sm btn-outline-secondary active" data-filter="all">
-                                All <span class="badge bg-dark ms-1">24</span>
-                            </button>
-                            <button class="btn btn btn-sm btn-outline-warning" data-filter="pending">
-                                In progress <span class="badge bg-warning ms-1">12</span>
-                            </button>
-                            <button class="btn btn-sm btn-outline-success" data-filter="answered">
-                                Answered <span class="badge bg-success ms-1">12</span>
-                            </button>
-                        </div>
-
-                    </div>
                 </div>
 
                 <div class="card shadow-sm">

@@ -216,10 +216,18 @@
                             <p>Guides</p>
                         </a>
                     </li>
-                     <li class="nav-item">
+                     <li class="nav-item active">
                         <a href="{{ path('app_excursions_read') }}">
                             <i class="fas fa-pen-square"></i>
                             <p>Excursions</p>
+                        </a>
+                    </li>
+
+                    <!-- Lien vers chart -->
+                    <li class="nav-item ">
+                        <a href="{{ path('app_chart_admin') }}">
+                            <i class="fas fa-pen-square"></i>
+                            <p>Charts</p>
                         </a>
                     </li>
                 </ul>
@@ -244,7 +252,7 @@
                             </div>
                             <input
                                     type="text"
-                                    placeholder="To research ..."
+                                    placeholder="Search ..."
                                     class="form-control"
                             />
                         </div>
