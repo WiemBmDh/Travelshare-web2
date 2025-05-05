@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Psr\Log\LoggerInterface;
 
 class ExcursionsController extends AbstractController
 {
@@ -104,4 +105,22 @@ class ExcursionsController extends AbstractController
 
         return $this->redirectToRoute('app_excursions_read');
     }
+
+    #[Route('/generate-description', name: 'app_excursions_generate_description', methods: ['POST'])]
+public function generateDescription(Request $request, YourAIService $aiService, LoggerInterface $logger): Response
+{
+    $title = $request->request->get('title');
+    if (empty($title)) {
+        $logger->error('Titre manquant pour la génération');
+        return $this->json(['error' => 'Le titre est requis'], 400);
+    }
+
+    try {
+        $description = $aiService->generateDescription($title);
+        return $this->json(['description' => $description]);
+    } catch (\Exception $e) {
+        $logger->critical("Échec OpenAI : " . $e->getMessage());
+        return $this->json(['error' => 'Erreur : ' . $e->getMessage()], 500);
+    }
+}
 }

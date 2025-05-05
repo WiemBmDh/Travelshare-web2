@@ -245,16 +245,23 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            {{ form_label(form.description, "Description") }}
-                                            {{ form_widget(form.description, {
-                                                'attr': {
-                                                    'class': 'form-control',
-                                                    'rows': 4,
-                                                    'placeholder': 'Detailed description...'
-                                                }
-                                            }) }}
-                                            <div class="error-message">{{ form_errors(form.description) }}</div>
-                                        </div>
+    {{ form_label(form.description, "Description") }}
+    <div class="input-group">
+        {{ form_widget(form.description, {
+            'attr': {
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Detailed description...'
+            }
+        }) }}
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="generateDescriptionBtn">
+                <i class="fas fa-magic"></i> Generate
+            </button>
+        </div>
+    </div>
+    <div class="error-message">{{ form_errors(form.description) }}</div>
+</div>
                                     </div>
                                     
                                     <!-- Section Dates -->
@@ -454,6 +461,84 @@
                 }
             });
         });
+
+
+        // Génération automatique de description
+$('#{{ form.title.vars.id }}').on('blur', function() {
+    const title = $(this).val().trim();
+    const descriptionField = $('#{{ form.description.vars.id }}');
+    
+    if (title && !descriptionField.val()) {
+        // Afficher un indicateur de chargement
+        descriptionField.val('Génération de la description...');
+        
+        // Appel AJAX au serveur
+        $.ajax({
+            url: '{{ path('app_excursions_generate_description') }}',
+            method: 'POST',
+            data: { title: title },
+            success: function(response) {
+                if (response.description) {
+                    descriptionField.val(response.description);
+                }
+            },
+            error: function(xhr) {
+                console.error('Failed to generate description:', xhr.responseText);
+                descriptionField.val('');
+            }
+        });
+    }
+});
+
+// Fonction pour valider les URLs
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
+$('#generateDescriptionBtn').click(function() {
+    const btn = $(this);
+    const title = $('#{{ form.title.vars.id }}').val().trim();
+    
+    if (!title) {
+        alert('Veuillez d\'abord entrer un titre');
+        return;
+    }
+
+    btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Génération...');
+
+    $.ajax({
+        url: '{{ path('app_excursions_generate_description') }}',
+        method: 'POST',
+        data: { title: title },
+        success: (response) => {
+            if (response.error) {
+                alert("Erreur : " + response.error);
+                if (response.details) {
+                    console.error("Détails :", response.details);
+                }
+            } else {
+                $('#{{ form.description.vars.id }}').val(response.description);
+            }
+        },
+        error: (xhr) => {
+            let errorMsg = "Erreur serveur";
+            try {
+                const response = xhr.responseJSON;
+                if (response && response.error) {
+                    errorMsg += ": " + response.error;
+                }
+            } catch (e) {
+                errorMsg += " (code " + xhr.status + ")";
+            }
+            alert(errorMsg);
+        },
+        complete: () => btn.prop('disabled', false).html('<i class="fas fa-magic"></i> Générer')
+    });
+});
     </script>
 {% endblock %}
 </body>
